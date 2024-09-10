@@ -5,6 +5,18 @@
 </p>
 <p align="center">(source: Ken Perlin)</p>
 
+## Description
+https://christinaqiu3.com/hw00-intro-base/
+
+![](./pro_hw1.png)
+![](./pro_hw2.png)
+
+* I created a Cube class using Javascript and WebGL by defining the indices, normals, and positions of the vertices.
+* I used 3D Worley Noise in a custom fragment shader to alter the cube's color and texture over time.
+* I modified the cube's vertex positions in the custom vertex shader using trigonometric functions to create an ease-in-out bouncy distortion effect.
+* The color of the cube can be changed through a GUI parameter.
+* If you set the geometry to an icosphere with a high tesselation value, the object looks like a fountain.
+
 ## Objective
 - Check that the tools and build configuration we will be using for the class works.
 - Start learning Typescript and WebGL2
