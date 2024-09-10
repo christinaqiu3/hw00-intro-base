@@ -67,8 +67,8 @@ function main() {
   gl.enable(gl.DEPTH_TEST);
 
   const lambert = new ShaderProgram([
-    new Shader(gl.VERTEX_SHADER, require('./shaders/lambert-vert.glsl')),
-    new Shader(gl.FRAGMENT_SHADER, require('./shaders/lambert-frag.glsl')),
+    new Shader(gl.VERTEX_SHADER, require('./shaders/deform-vert.glsl')),
+    new Shader(gl.FRAGMENT_SHADER, require('./shaders/worley-frag.glsl')),//'./shaders/lambert-frag.glsl'
   ]);
 
   // This function will be called every frame
@@ -84,10 +84,12 @@ function main() {
       icosphere.create();
     }
     const colorVec = vec4.fromValues(controls.color[0] / 255, controls.color[1] / 255, controls.color[2] / 255, 1.0);
+    let currentTime = performance.now() / 1000.0;  // Get time in seconds
+    lambert.setTime(currentTime);
     renderer.render(camera, lambert, [
-      //icosphere,
+      icosphere,
       //square,
-      cube,
+      //cube,
     ], colorVec);
     stats.end();
 
