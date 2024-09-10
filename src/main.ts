@@ -9,11 +9,13 @@ import Camera from './Camera';
 import {setGL} from './globals';
 import ShaderProgram, {Shader} from './rendering/gl/ShaderProgram';
 import {gl} from './globals'; 
+import Drawable from './rendering/gl/Drawable';
 
 // Define an object with application parameters and button callbacks
 // This will be referred to by dat.GUI's functions that add GUI elements.
 const controls = {
-  tesselations: 5,
+  geometry: "cube",
+  tesselations: 0,
   color: [255, 0, 0],//default red color
   'Load Scene': loadScene, // A function pointer, essentially
 };
@@ -43,6 +45,7 @@ function main() {
 
   // Add controls to the gui
   const gui = new DAT.GUI();
+  gui.add(controls, "geometry", ["icosphere", "square", "cube"]);
   gui.add(controls, 'tesselations', 0, 8).step(1);
   gui.add(controls, 'Load Scene');
   gui.addColor(controls, 'color');//colorpicker to gui
@@ -77,7 +80,7 @@ function main() {
     stats.begin();
     gl.viewport(0, 0, window.innerWidth, window.innerHeight);
     renderer.clear();
-    if(controls.tesselations != prevTesselations)
+    if(controls.geometry === "icosphere" && controls.tesselations != prevTesselations)
     {
       prevTesselations = controls.tesselations;
       icosphere = new Icosphere(vec3.fromValues(0, 0, 0), 1, prevTesselations);
@@ -86,10 +89,13 @@ function main() {
     const colorVec = vec4.fromValues(controls.color[0] / 255, controls.color[1] / 255, controls.color[2] / 255, 1.0);
     let currentTime = performance.now() / 1000.0;  // Get time in seconds
     lambert.setTime(currentTime);
+    
+    let geometry: Drawable = cube;
+    if (controls.geometry === "icosphere") geometry = icosphere;
+    if (controls.geometry === "square") geometry = square;
+
     renderer.render(camera, lambert, [
-      icosphere,
-      //square,
-      //cube,
+      geometry
     ], colorVec);
     stats.end();
 

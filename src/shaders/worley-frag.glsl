@@ -52,7 +52,7 @@ float WorleyNoise(vec3 p) {
 void main()
 {
     // Material base color (before shading)
-        vec4 diffuseColor = u_Color;
+        vec4 diffuseColor = u_Color + vec4(sin(u_Time), sin(u_Time), sin(u_Time), 0);
 
         // Calculate the diffuse term for Lambert shading
         float diffuseTerm = dot(normalize(fs_Nor), normalize(fs_LightVec));
